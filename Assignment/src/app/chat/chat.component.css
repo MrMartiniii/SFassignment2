@@ -1,0 +1,58 @@
+.title {
+margin: 20px;
+color: rgb(176, 209, 235);
+display: inline-flex;
+background-color: rgb(110, 117, 141);
+border: 1px solid rgb(255, 255, 255);
+border-radius: 20px 20px 20px 20px;
+padding: 0px 10px;
+}
+
+.title button {
+    margin-top: 30px;
+    margin-right: 20px;
+    position: absolute;
+    right: 0px;
+}
+.textInput {
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+input[type=text] {
+    width: 60vw;
+    margin: 20px;
+    padding: 16px 10px;
+    font-size: large;
+    border-radius: 10px 10px 10px 10px;
+    background-color: rgb(94, 118, 204);
+    border: 1px solid rgb(255, 255, 255);
+}
+
+button {
+    padding: 18px 20px;
+    border-radius: 15px 15px 15px 15px;
+    background-color: rgb(66, 66, 148);
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    border: none;
+}
+
+button:hover{
+    background-color: rgb(140, 140, 187);
+    color: rgb(21, 20, 20);
+    font-weight: bold;
+    font-size: large;
+    cursor: pointer;
+}
+
+.messages {
+    background-color: rgb(110, 117, 141);
+    height: 590px;
+    margin-left: 20px;
+    border-radius: 30px 30px 30px 30px;
+    border: 1px solid rgb(255, 255, 255);
+}

@@ -1,0 +1,15 @@
+<div class="title">
+    <h1>RoomName</h1>
+    <button (click)="end()">Leave Room</button>
+</div>
+<div class="messages">
+    <li *ngFor="let m of messages">{{m}}</li>
+</div>
+<div class="typeBox">
+    <form>
+        <div class="textInput">
+            <input type="text" [(ngModel)]="messagecontent" name="messagecontent">
+            <button (click)="chat()">Submit</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,13 @@
+
+<body>
+    
+<h1 class="title">Welcome to Strife</h1>
+<h2>Please log in</h2>
+
+<form>
+    <input type="text" placeholder="Email" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"> <br>
+    <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"> <br>
+    <input type="submit" (click)="submit()" value="Get Chatting!">
+</form>
+
+</body>
