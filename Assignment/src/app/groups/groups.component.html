@@ -1,47 +1,51 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div class="title" >
+
+<div class="title">
     <h1>Welcome Back</h1>
     <h2 id="UserDisplay">{{get()}}</h2>
     <h3>Where would you like to go?</h3>
 </div>
-<div class="groups">
-    <li *ngFor="let group of groups; let i = index">
-        <details>
-            <summary>
-                {{group.groupName}}
-            </summary>
-            <div class="detailsbox">
-                <select name="channels" id="Channel">C
-                    <option value="">channel1</option>
-                </select>
-                <button *ngIf="(userGroups.includes(group.groupName)) || (isAdmin)" (click)="join()">Join Channel</button>
-                <button *ngIf="(isAdmin) || (permissions.includes(group.groupName))" (click)="showUsers()">{{ userState ? "Hide Users" : "Edit Users" }}</button>
-                <button *ngIf="(isAdmin) || (permissions.includes(group.groupName))">Delete Channel</button>
-                <button *ngIf="(isAdmin) || (permissions.includes(group.groupName))" (click)="delGroup(group.groupName, i)">Delete Group</button>
-            </div>
-            <div *ngIf="userState">
-                <p>In {{group.groupName}}</p>
-            </div>
-            <div *ngIf="userState" class="userlistDiv">
-                <div *ngFor="let u of users">
-                    <li class="userlist" ><p>{{u.username}}</p> <button>Add to Group</button><button (click)="makeAdmin()">Make Admin</button></li>
-                </div>
 
-                
-            </div>
-        </details>
-    </li> 
-    <li *ngIf="isAdmin" class="addGroup">
-        <details>
-            <Summary>Create Group</Summary>
-            <input type="text" [(ngModel)]="newGroup">
-            <input type="submit" (click)="addGroup()">
-        </details>
-    </li>
+<div class="groups">
+    <ul>
+        <li *ngFor="let group of groups; let i = index">
+            <details>
+                <summary>
+                    {{group.groupName}}
+                </summary>
+                <div class="detailsbox">
+                    <select name="channels" id="Channel">
+                        <option value="">channel1</option>
+                    </select>
+                    <button *ngIf="(userGroups.includes(group.groupName)) || (isAdmin)" (click)="join()">Join Channel</button>
+                    <button *ngIf="(isAdmin)" (click)="showUsers()">{{ userState ? "Hide Users" : "Edit Users" }}</button>
+                    <button *ngIf="(isAdmin)">Delete Channel</button>
+                    <button *ngIf="(isAdmin)" (click)="delGroup(group)">Delete Group</button>
+                </div>
+                <div *ngIf="userState">
+                    <p>In {{group.groupName}}</p>
+                </div>
+                <div *ngIf="userState" class="userlistDiv">
+                    <div *ngFor="let u of users">
+                        <li class="userlist">
+                            <p>{{u.username}}</p>
+                            <button>Add to Group</button>
+                            <button (click)="makeAdmin()">Make Admin</button>
+                        </li>
+                    </div>
+                </div>
+            </details>
+        </li> 
+        <li *ngIf="isAdmin" class="addGroup">
+            <details class="create-group-details">
+                <summary>Create Group</summary>
+                <input type="text" [(ngModel)]="newGroup.groupName" placeholder="Group Name">
+                <input type="submit" (click)="addGroup()" value="Add Group">
+            </details>
+        </li>
+    </ul>
 </div>
+
 <div class="clear">
     <button class="logOut" (click)="logOut()">LogOut</button>
 </div>
-
-
-

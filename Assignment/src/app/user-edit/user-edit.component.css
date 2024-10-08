@@ -1,0 +1,62 @@
+.edit-user-container {
+    background-color: white; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding around the form */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    max-width: 600px; /* Limit maximum width */
+    margin: 20px auto; /* Center the form */
+}
+
+.edit-user-container h1 {
+    color: #4A90E2; /* Primary color for the header */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+.form-group label {
+    display: block; /* Block-level labels */
+    margin-bottom: 5px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%; /* Full width for inputs */
+    padding: 10px; /* Padding for inputs */
+    border: 1px solid #C4C4C4; /* Border for inputs */
+    border-radius: 4px; /* Rounded corners */
+    background-color: white; /* White background for inputs */
+}
+
+.groups-container {
+    display: flex; /* Flexbox for group layout */
+    flex-direction: column; /* Stack items vertically */
+}
+
+.groups-container ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0 0 10px 0; /* Margin for spacing */
+}
+
+.groups-container li {
+    display: flex; /* Flexbox for group item layout */
+    justify-content: space-between; /* Space between group name and button */
+}
+
+button {
+    padding: 10px 15px; /* Padding for buttons */
+    background-color: #4A90E2; /* Primary color for buttons */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+    background-color: #50E3C2; /* Teal on hover */
+}

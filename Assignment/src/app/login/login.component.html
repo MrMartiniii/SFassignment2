@@ -1,13 +1,17 @@
-
-<body>
-    
-<h1 class="title">Welcome to Strife</h1>
+<!-- login.component.html -->
+<h1 class="title">Welcome to Chatter</h1>
 <h2>Please log in</h2>
 
 <form>
-    <input type="text" placeholder="Email" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"> <br>
-    <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"> <br>
+    <input type="text" placeholder="username" [(ngModel)]="user.username" [ngModelOptions]="{standalone: true}"> 
+    <input type="password" placeholder="Password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}"> 
     <input type="submit" (click)="submit()" value="Get Chatting!">
 </form>
 
-</body>
+<h3>Or Sign up</h3>
+<form>
+    <input type="text" placeholder="username" [(ngModel)]="newUser.username" [ngModelOptions]="{standalone: true}"> 
+    <input type="password" placeholder="Password" [(ngModel)]="newUser.password" [ngModelOptions]="{standalone: true}"> 
+    <input type="text" placeholder="email" [(ngModel)]="newUser.email" [ngModelOptions]="{standalone: true}"> 
+    <input type="submit" (click)="signUp()" value="Sign Up!">
+</form>

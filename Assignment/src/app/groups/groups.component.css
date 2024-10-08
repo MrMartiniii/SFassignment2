@@ -1,150 +1,184 @@
+/* groups.component.css */
 .title {
-    margin-top: 10px;
-    margin-bottom: 30px;
-    margin: auto;
-    text-align: center;
-    color: rgb(171, 196, 219);
-    font-size: larger;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    width: 30%;
-    border: 2px solid black;
-    background-color: rgb(27, 27, 42);
-    border-radius: 25px;
-
-    position: relative;
-}
-
-h2 {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-h1 {
-    padding-bottom: 0px;
+    text-align: center; /* Center the title and headings */
+    color: #4A90E2; /* Primary color for the title */
 }
 
 .groups {
-    margin: auto;
-    width: 70%;
+    padding: 20px; /* Padding around the group list */
+    background-color: #F7F9FC; /* Light gray background for the group area */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin: 20px auto; /* Center the group area */
+    width: 80%; /* Responsive width */
 }
 
-li {
-    border: 3px solid rgb(16, 16, 24);
-    border-radius: 10px 10px 10px 10px;
-    list-style: none;
-    background-color: rgb(71, 71, 122);
-    margin-bottom: 10px;    
-    color: aliceblue;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.groups ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
 }
 
-li:first-child { 
-    display: block;
-    margin-top: 20px;  
+.groups li {
+    margin: 5px 0; /* Reduced margin for spacing between groups */
+    background-color: white; /* White background for each group */
+    border-radius: 4px; /* Rounded corners for group boxes */
+    padding: 10px; /* Padding inside group boxes */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
 }
 
-li:hover {
-    background-color: rgb(88, 88, 128);
-    cursor: pointer;
-}
-
-.addGroup{
-    margin: auto;
-    background-color: #3e5de5;
-}
-
-input[type=text] {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    text-align: left;
-    background-color: rgb(26, 29, 50);
-    color: white;
-}
-
-input[type=submit] {
-    width: 30%;
-    background-color: #3e5de5;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin:auto;
-}
-
-
-
-summary {
-    padding: 20px;
-    display: flex;
-}
-
-button {
-    padding: 6px 10px;
-    margin-right: 20px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-select {
-    padding: 6px 10px;
-    margin-right: 50px;
-    margin-bottom: 10px;
-}
 
 .detailsbox {
-    padding: 10px;
-
-}
-
-.clear {
-    padding: 10px;
-}
-.logOut {
-    padding: 12px 20px;
-    position: sticky;
-    bottom: 5px;
-    margin: auto;
-    border: 2px solid #3e5de5;
-    background-color: #3e5de5;
-}
-
-.logOut:hover {
-    padding: 15px 24px;
-    bottom: 5px;
-    margin: auto;
-    border: none;
-    background-color: #5670e5;
+    margin-top: 10px; /* Spacing above details box */
 }
 
 .userlistDiv {
-    width: 80%;
-    padding-left: 10px;
-    border: 1px solid pink;
+    margin-top: 10px; /* Spacing for user list */
 }
 
-.userlist{
-    text-align: center;
-    width: 40%;
-    padding: 6px 10px;
-    display: inline-block;
+.userlist {
+    display: flex;
+    justify-content: space-between; /* Space between username and buttons */
+    padding: 5px; /* Padding for each user item */
 }
 
-.userlist button {
-    display: inline;
-    position: relative;
-    margin-bottom: 0px;
-    margin-right: 0%;
-    right: 10px 
+.clear {
+    text-align: center; /* Center the logout button */
+    margin-top: 20px; /* Space above logout button */
 }
 
-.userlist p {
-    margin-right: 5px;
-    padding-left: 5px;
+.logOut {
+    padding: 10px 20px; /* Padding for the logout button */
+    background-color: #D0021B; /* Red background for logout button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
+.logOut:hover {
+    background-color: #C8001D; /* Darker red on hover */
+}
 
+/* Details Section Styles */
+details {
+    background-color: white; /* Background color for the details section */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside the details box */
+    margin: 10px 0; /* Margin above and below the details */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+summary {
+    font-weight: bold; /* Make the group name bold */
+    cursor: pointer; /* Change cursor to pointer */
+    padding: 15px; /* Increased padding for a larger clickable area */
+    background-color: #4A90E2; /* Primary color for summary */
+    color: white; /* White text for summary */
+    border-radius: 5px; /* Rounded corners for summary */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    font-size: 1.2em; /* Increase font size for better readability */
+    margin-bottom: 10px; /* Space below summary box */
+}
+
+summary:hover {
+    background-color: #50E3C2; /* Change color on hover */
+}
+
+/* Adjust the detailsbox for horizontal button layout */
+.detailsbox {
+    margin-top: 10px; /* Spacing above the details box */
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: row; /* Align buttons in a row */
+    justify-content: space-between; /* Space between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap if necessary */
+}
+
+button {
+    padding: 10px 15px; /* Padding for buttons */
+    background-color: #D0021B; /* Red background for buttons */
+    color: white; /* White text for buttons */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    margin: 0 5px; /* Horizontal margin for spacing between buttons */
+    flex: 1 1 auto; /* Allow buttons to grow and shrink */
+    max-width: 150px; /* Optional: limit max width of buttons */
+}
+
+select {
+    padding: 10px; /* Padding for the select box */
+    margin-bottom: 10px; /* Space below select box */
+    border: 1px solid #C4C4C4; /* Border for select box */
+    border-radius: 4px; /* Rounded corners */
+    width: 100%; /* Make select box take full width */
+}
+
+button:hover {
+    background-color: #C8001D; /* Darker red on hover */
+}
+
+.userlistDiv {
+    margin-top: 10px; /* Spacing for user list */
+}
+
+.userlist {
+    display: flex; /* Use flexbox for user list */
+    justify-content: space-between; /* Space between username and buttons */
+    padding: 5px; /* Padding for user items */
+    background-color: #F7F9FC; /* Light gray background for user items */
+    border-radius: 4px; /* Rounded corners for user items */
+    margin-top: 5px; /* Margin for spacing */
+}
+
+/* Styles for Create Group Section */
+.create-group-details {
+    background-color: white; /* Use a different background color for the create group section */
+    color: white; /* White text color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding for inner spacing */
+    margin-top: 20px; /* Space above the create group section */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.create-group-details summary {
+    background-color: #30629b; /* Different color for summary */
+    color: white; /* White text for summary */
+    padding: 10px; /* Padding for summary */
+    border-radius: 5px; /* Rounded corners for summary */
+    cursor: pointer; /* Pointer cursor for summary */
+    font-weight: bold; /* Bold text for summary */
+    font-size: 1.2em; /* Increase font size for better readability */
+}
+
+.create-group-details summary:hover {
+    background-color: #5a93d4; /* Different color for summary */
+    color: white; /* White text for summary */
+    padding: 10px; /* Padding for summary */
+    border-radius: 5px; /* Rounded corners for summary */
+    cursor: pointer; /* Pointer cursor for summary */
+    font-weight: bold; /* Bold text for summary */
+    font-size: 1.2em; /* Increase font size for better readability */
+}
+
+.create-group-details input[type="text"],
+.create-group-details input[type="submit"] {
+    padding: 10px; /* Padding for inputs */
+    margin-top: 10px; /* Space above inputs */
+    width: 100%; /* Full width for inputs */
+    border-radius: 4px; /* Rounded corners for inputs */
+    border: 1px solid #C4C4C4; /* Border for inputs */
+}
+
+/* Style for Add Group Button */
+.create-group-details input[type="submit"] {
+    background-color: #D0021B; /* Red background for button */
+    color: white; /* White text for button */
+    cursor: pointer; /* Pointer cursor for button */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.create-group-details input[type="submit"]:hover {
+    background-color: #C8001D; /* Darker red on hover */
+}

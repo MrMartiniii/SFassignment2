@@ -1,0 +1,24 @@
+<p class="users-header">Users</p>
+<table class="users-table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Groups</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of users">
+            <td>{{u.username}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.groups}}</td>
+            <td>{{u.roles}}</td>
+            <td>
+                <button class="action-button" (click)="deleteUser(u)">Delete</button>
+                <button class="action-button" (click)="updateUser(u)">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

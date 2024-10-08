@@ -1,15 +1,37 @@
-<div class="title">
-    <h1>RoomName</h1>
-    <button (click)="end()">Leave Room</button>
-</div>
-<div class="messages">
-    <li *ngFor="let m of messages">{{m}}</li>
-</div>
-<div class="typeBox">
-    <form>
-        <div class="textInput">
-            <input type="text" [(ngModel)]="messagecontent" name="messagecontent">
-            <button (click)="chat()">Submit</button>
+<body>
+    <div class="title">
+        <h1>RoomName</h1>
+        <button class="leave-room" (click)="end()">Leave Room</button>
+    </div>
+    <div class="container">
+        <div class="messages">
+            <ul>
+                <li class="posts" *ngFor="let m of messages">
+                    <span class="username">{{m.split(':')[0]}}:</span> <span class="user-message">{{m.split(':')[1]}}</span>
+                </li>
+            </ul>
         </div>
-    </form>
-</div>
+        <div class="peer-list">
+            <h3>Available Users:</h3>
+            <ul>
+                <li *ngFor="let peer of peerIds">
+                    <button (click)="makeCall(peer.peerId)">Call: {{peer.username}}</button>
+                  </li>
+            </ul>
+        </div>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <video #remoteVideo class="remote-video" autoplay></video>
+                <video #myVideo class="local-video" muted autoplay></video>
+            </div>
+        </div>
+    </div>
+    <div class="typeBox">
+        <form>
+            <div class="textInput">
+                <input type="text" [(ngModel)]="messagecontent" name="messagecontent" placeholder="Type your message..." required>
+                <button class="submit-button" (click)="chat()">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>

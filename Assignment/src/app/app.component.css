@@ -1,45 +1,63 @@
+/* Sidebar styles */
+.sidebar {
+    width: 250px; /* Width of the sidebar */
+    background-color: #4A90E2; /* Primary color */
+    height: 100vh; /* Full height of the viewport */
+    position: fixed; /* Fixed position to stay in view */
+    left: 0; /* Align to the left */
+    top: 0; /* Align to the top */
+    display: flex;
+    flex-direction: column; /* Stack nav items vertically */
+    justify-content: space-between; /* Space between nav items and logout button */
+}
+
+.navbar {
+    flex: 1; /* Allow navbar to take full height */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.navbar-nav {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.navbar-nav li {
+    margin: 0; /* Remove margin */
+}
+
+.nav-link {
+    color: white; /* White text color for links */
+    padding: 15px; /* Padding for clickable area */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Make links block-level elements */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.nav-link:hover {
+    background-color: #50E3C2; /* Change color on hover */
+}
+
+.logout-button {
+    padding: 10px; /* Padding for the logout button */
+    background-color: #D0021B; /* Red background for logout button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    margin: 15px; /* Margin for spacing */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.logout-button:hover {
+    background-color: #C8001D; /* Darker red on hover */
+}
+
+/* Main content styles */
 #mainContent {
-    flex-grow: 10;
-    align-items: center;
-    justify-content: center;
+    margin-left: 250px; /* Leave space for the sidebar */
+    padding: 20px; /* Add some padding around the content */
+    background-color: #F7F9FC; /* Light gray background for content area */
+    min-height: 100vh; /* Ensure it takes full viewport height */
 }
-
-
-ul {
-    list-style-type: none;
-    border-right: 2px solid rgb(0, 0, 0);
-    border-top: 2px solid rgb(0, 0, 0);
-    margin: 0;
-    padding: 0;
-    width: 10%;
-    background-color:rgb(32, 32, 44);
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-}
-  
-li a {
-    display: block;
-    color: #000;
-    padding: 20px 16px;
-    text-decoration: none;
-    text-align: center;
-    font-size: large;
-    color: rgb(183, 183, 183);
-}
-  
-li a.active {
-    background-color: #04AA6D;
-    color: rgb(32, 32, 44);
-}
-  
-li a:hover:not(.active) {
-    background-color: rgb(21, 21, 47);
-    color: rgb(255, 255, 255);
-    font-size: larger;
-}
-
-body {
-    background-color: rgb(32, 32, 44);
-}
-

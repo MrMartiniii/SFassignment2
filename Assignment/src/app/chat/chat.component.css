@@ -1,58 +1,149 @@
+/* Chat Page Styles */
+body {
+    font-family: 'Arial', sans-serif; /* Font family */
+    background-color: #F7F9FC; /* Light gray background */
+    color: #333333; /* Dark gray text color */
+    margin: 0; /* Remove default margin */
+    padding: 20px; /* Padding around the body */
+}
+
 .title {
-margin: 20px;
-color: rgb(176, 209, 235);
-display: inline-flex;
-background-color: rgb(110, 117, 141);
-border: 1px solid rgb(255, 255, 255);
-border-radius: 20px 20px 20px 20px;
-padding: 0px 10px;
+    display: flex; /* Flexbox for title and button alignment */
+    justify-content: space-between; /* Space between title and button */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 20px; /* Space below title */
 }
 
-.title button {
-    margin-top: 30px;
-    margin-right: 20px;
-    position: absolute;
-    right: 0px;
-}
-.textInput {
-    position: absolute;
-    bottom: 5px;
-    text-align: center;
-    display: inline-block;
+.leave-room {
+    padding: 10px 15px; /* Padding for the leave button */
+    background-color: #D0021B; /* Red background for leave button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
 }
 
-input[type=text] {
-    width: 60vw;
-    margin: 20px;
-    padding: 16px 10px;
-    font-size: large;
-    border-radius: 10px 10px 10px 10px;
-    background-color: rgb(94, 118, 204);
-    border: 1px solid rgb(255, 255, 255);
+.leave-room:hover {
+    background-color: #C8001D; /* Darker red on hover */
 }
 
-button {
-    padding: 18px 20px;
-    border-radius: 15px 15px 15px 15px;
-    background-color: rgb(66, 66, 148);
-    color: white;
-    font-weight: bold;
-    font-size: large;
-    border: none;
-}
-
-button:hover{
-    background-color: rgb(140, 140, 187);
-    color: rgb(21, 20, 20);
-    font-weight: bold;
-    font-size: large;
-    cursor: pointer;
+.container {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: row; /* Arrange items in a row */
+    justify-content: space-between; /* Space between sections */
+    margin-bottom: 20px; /* Space below container */
 }
 
 .messages {
-    background-color: rgb(110, 117, 141);
-    height: 590px;
-    margin-left: 20px;
-    border-radius: 30px 30px 30px 30px;
-    border: 1px solid rgb(255, 255, 255);
+    flex: 3; /* Flex-grow for messages section */
+    background-color: white; /* White background for messages */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding for messages */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    max-height: 500px; /* Max height for scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.posts {
+    margin-bottom: 10px; /* Space between messages */
+}
+
+.username {
+    font-weight: bold; /* Bold for username */
+}
+
+.peer-list {
+    flex: 1; /* Flex-grow for peer list section */
+    background-color: white; /* White background for peer list */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding for peer list */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    margin-left: 20px; /* Space between messages and peer list */
+}
+
+.peer-list ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.peer-list button {
+    background-color: #4A90E2; /* Primary color for call button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding for call button */
+    width: 100%; /* Full width */
+    margin: 5px 0; /* Spacing between call buttons */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.peer-list button:hover {
+    background-color: #50E3C2; /* Teal on hover */
+}
+
+.video-container {
+    position: relative; /* Allows absolute positioning of child elements */
+    width: 80%; /* Full width for the video container */
+    max-width: 600px; /* Optional: Limit maximum width */
+    margin: 20px auto; /* Center the video container */
+    padding: 20px;
+}
+
+.video-wrapper {
+    position: relative; /* Needed for absolute positioning of local video */
+}
+
+.remote-video {
+    width: 100%; /* Full width for remote video */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 400px; /* Limit max height for remote video */
+    border-radius: 8px; /* Rounded corners */
+    object-fit: cover; /* Ensure the video covers the box */
+}
+
+.local-video {
+    position: absolute; /* Positioning it on top of the remote video */
+    bottom: 10px; /* Distance from the bottom of the remote video */
+    right: 10px; /* Distance from the right of the remote video */
+    width: 30%; /* Set width of local video */
+    max-height: 150px; /* Limit max height for local video */
+    border-radius: 8px; /* Rounded corners */
+    z-index: 10; /* Ensure local video is on top */
+    object-fit: cover; /* Ensure the video covers the box */
+}
+
+.typeBox {
+    margin-top: 20px; /* Space above type box */
+}
+
+.textInput {
+    display: flex; /* Flexbox for input and button */
+}
+
+.textInput input[type="text"] {
+    flex: 1; /* Take available space */
+    padding: 10px; /* Padding for input */
+    border: 1px solid #C4C4C4; /* Border for input */
+    border-radius: 4px; /* Rounded corners */
+    margin-right: 10px; /* Space between input and button */
+    background-color: white; /* White background for input */
+    color: #333333; /* Dark gray text color for input */
+    font-size: 1em; /* Font size for input */
+}
+
+.submit-button {
+    padding: 10px 15px; /* Padding for submit button */
+    background-color: #4A90E2; /* Primary color for submit button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.submit-button:hover {
+    background-color: #50E3C2; /* Teal on hover */
 }
