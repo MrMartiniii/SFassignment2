@@ -133,7 +133,7 @@ Manages Socket.IO connections for real-time communication in the chat component,
 
 
 ### **Models**
-- **User odel**
+- **User Model**
 Defines the structure of the user object (exports a interface with the above user structure).
 
 - **GroupModel**
