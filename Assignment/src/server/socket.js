@@ -25,7 +25,7 @@ module.exports = {
                         // Create a join message for the room
                         const joinMessage = {
                             username: username,
-                            message: `${username} has joined the chat`,
+                            message: ` has joined the chat`,
                             profilePicture: 'assets/default-avatar.png',
                         };
 
@@ -65,7 +65,7 @@ module.exports = {
 
                     // Create a disconnect message
                     const disconnectMessage = {
-                        message: `${disconnectedUser} has left the chat`,
+                        message: ` has left the chat`,
                         username: disconnectedUser,
                         profilePicture: 'assets/default-avatar.png'
                     };
