@@ -9,6 +9,7 @@ const SERVER_URL = 'http://localhost:8888/chat'; // Ensure this matches the port
 @Injectable({
     providedIn: 'root'
 })
+
 export class SocketService {
     public socket: any;
 

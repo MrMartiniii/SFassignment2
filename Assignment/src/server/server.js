@@ -1,5 +1,7 @@
 const PORT = 8888;
+const path = require('path');
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const http = require('http');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
@@ -20,6 +22,9 @@ const io = require('socket.io')(server, {
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(fileUpload());
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const client = new MongoClient('mongodb://localhost:27017');
 
@@ -33,6 +38,8 @@ app.get('/userFind', (req, res) => (users.find(req, res, client)));
 app.post('/userUpdate', (req, res) => (users.update(req, res, client)));
 app.post('/userDelete', (req, res) => (users.delete(req, res, client)));
 app.post('/login', (req, res) => (users.login(req, res, client)));
+app.post('/uploadProfilePicture', (req, res) => (users.profilePic(req, res, client)));
+app.get('/getProfilePicture', (req, res) => (users.getProfilePicture(req, res, client)));
 
 // Group Db operations
 const groups = require('./dbOperations/groupOps');

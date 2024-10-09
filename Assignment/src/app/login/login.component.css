@@ -53,12 +53,28 @@ input[type="submit"] {
     transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
-    background-color: #C8001D;
-}
-
 /* Center the forms horizontally */
 form {
     margin-left: auto; /* Center the form */
     margin-right: auto; /* Center the form */
 }
+
+/* login.component.css */
+body {
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+    background-color: #F7F9FC; /* Light gray background */
+}
+
+.login-container {
+    text-align: center; /* Center text inside the container */
+    background-color: white; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding around the form */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    width: 300px; /* Fixed width for the login container */
+}
+

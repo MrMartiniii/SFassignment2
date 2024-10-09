@@ -1,0 +1,166 @@
+/* Profile Page Styles */
+.profile-container {
+    padding: 20px; /* Padding around the profile area */
+    background-color: #F7F9FC; /* Light gray background for the profile area */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 80%; /* Responsive width */
+    max-width: 800px; /* Optional: Limit maximum width */
+    margin: 20px auto; /* Center the profile container */
+}
+
+.profile-info {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 20px; /* Space below the profile info */
+}
+
+.profile-picture {
+    margin-right: 20px; /* Space between profile picture and details */
+}
+
+.profile-picture label {
+    display: block; /* Block for better layout */
+    margin-bottom: 10px; /* Space below label */
+}
+
+.profile-picture input[type="file"] {
+    padding: 5px; /* Padding for file input */
+}
+
+.user-details {
+    flex: 1; /* Allow user details to take available space */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+.form-group label {
+    display: block; /* Block for better layout */
+    margin-bottom: 5px; /* Space below label */
+}
+
+.form-group input[type="text"] {
+    width: 100%; /* Full width for inputs */
+    padding: 10px; /* Padding for inputs */
+    border: 1px solid #C4C4C4; /* Border for inputs */
+    border-radius: 4px; /* Rounded corners */
+    background-color: white; /* White background for inputs */
+}
+
+.action-buttons {
+    text-align: center; /* Center the action buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+.action-buttons button {
+    padding: 10px 15px; /* Padding for buttons */
+    background-color: #4A90E2; /* Primary color for buttons */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    margin-right: 10px; /* Space between buttons */
+}
+
+.action-buttons button:hover {
+    background-color: #50E3C2; /* Teal on hover */
+}
+
+.sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    background-color: #4A90E2; /* Primary color */
+    height: 100vh; /* Full height of the viewport */
+    position: fixed; /* Fixed position to stay in view */
+    left: 0; /* Align to the left */
+    top: 0; /* Align to the top */
+    display: flex;
+    flex-direction: column; /* Stack nav items vertically */
+    justify-content: flex-start; /* Align items at the top */
+    z-index: 1000; /* Ensure sidebar is on top */
+}
+
+.navbar {
+    flex: 1; /* Allow navbar to take full height */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.navbar-nav {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.navbar-nav li {
+    margin: 0; /* Remove margin */
+}
+
+.nav-link {
+    color: white; /* White text color for links */
+    padding: 15px; /* Padding for clickable area */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Make links block-level elements */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.nav-link:hover {
+    background-color: #50E3C2; /* Change color on hover */
+}
+
+.logout-button {
+    padding: 10px; /* Padding for the logout button */
+    background-color: #D0021B; /* Red background for logout button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    margin: 15px; /* Margin for spacing */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    height: 40px; /* Set a fixed height for the logout button */
+}
+
+
+.logout-button:hover {
+    background-color: #C8001D; /* Darker red on hover */
+}
+
+#mainContent {
+    margin-left: 250px; /* Leave space for the sidebar */
+    padding: 20px; /* Add some padding around the content */
+    background-color: #F7F9FC; /* Light gray background for content area */
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+.profile-image-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the entire circular area */
+    border: 2px solid #ccc; /* Optional border for styling */
+}
+
+.profile-image-preview:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional shadow effect */
+}
+
+.upload-button {
+    display: inline-block;
+    background-color: #007bff; /* Blue color for the button */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.upload-button:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+}

@@ -13,22 +13,33 @@
             <label>Groups:</label>
             <div class="groups-container">
                 <ul>
-                    <li *ngFor="let group of user.groups">
+                    <li *ngFor="let group of user.groups; let i = index">
                         {{ group }} 
-                        <button (click)="removeGroup()">Remove</button>
+                        <button type="button" (click)="removeGroup(i)">Remove</button>
                     </li>
                 </ul>
-                <input type="text" name="group" [(ngModel)]="newGroup" placeholder="Add a new group" />
+                <select class="select-control" [(ngModel)]="newGroup" name="selectGroup">
+                    <option *ngFor="let group of groups" [value]="group.groupName">{{ group.groupName }}</option>
+                </select>
                 <button type="button" (click)="addGroup()">Add Group</button>
             </div>
         </div>
         <div class="form-group">
             <label>Roles:</label>
-            <select [(ngModel)]="user.roles" name="role">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
+            <div class="roles-container">
+                <ul>
+                    <li *ngFor="let role of user.roles; let i = index">
+                        {{ role }} 
+                        <button type="button" (click)="removeRole(i)">Remove</button>
+                    </li>
+                </ul>
+                <select class="select-control" [(ngModel)]="newRole" name="selectRole">
+                    <option *ngFor="let role of availableRoles" [value]="role">{{ role }}</option>
+                </select>
+                <button type="button" (click)="addRole()">Add Role</button>
+            </div>
         </div>
         <button type="submit">Save Changes</button>
+        <button type="button" (click)="cancelEdit()">Cancel</button> <!-- New Cancel button -->
     </form>
 </div>

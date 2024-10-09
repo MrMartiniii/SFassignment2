@@ -5,15 +5,15 @@ export interface UserModel{
     password?: string;
     email: string;
     userid?: number;
-    roles: [];
-    groups: [];
-
+    roles: string[];
+    groups: string[];
+    profilePicture?: string;
 }
 
 export interface GroupModel{
 
     _id?: string;
     groupName: string;
-    admins: [];
-    users: [];
+    admins: string[];
+    users: string[];
 }

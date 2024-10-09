@@ -1,24 +1,43 @@
-<p class="users-header">Users</p>
-<table class="users-table">
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Groups</th>
-            <th>Roles</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let u of users">
-            <td>{{u.username}}</td>
-            <td>{{u.email}}</td>
-            <td>{{u.groups}}</td>
-            <td>{{u.roles}}</td>
-            <td>
-                <button class="action-button" (click)="deleteUser(u)">Delete</button>
-                <button class="action-button" (click)="updateUser(u)">Edit</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<!-- users.component.html -->
+<div id="NavBarFlex" class="sidebar">
+    <nav class="navbar">
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" routerLink="/login">Login</a></li>
+            <li><a class="nav-link" routerLink="/groups">Groups</a></li>
+            <li><a class="nav-link" routerLink="/profile">Profile</a></li>
+        </ul>
+        <button class="logout-button" (click)="logOut()">Log Out</button> 
+    </nav>
+</div>
+
+<div id="mainContent">
+    <div class="title">
+        <h1>Users List</h1>
+    </div>
+
+    <div class="users">
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Groups</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let u of users">
+                    <td>{{u.username}}</td>
+                    <td>{{u.email}}</td>
+                    <td>{{u.groups.join(', ')}}</td>
+                    <td>{{u.roles.join(', ')}}</td>
+                    <td>
+                        <button class="action-button" (click)="deleteUser(u)">Delete</button>
+                        <button class="action-button" (click)="updateUser(u)">Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

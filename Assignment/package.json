@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:Assignment": "node dist/assignment/server/server.mjs"
+    "serve:ssr:Assignment": "node dist/assignment/server/server.mjs",
+    "unitTest": "mocha ./UnitTest/test.js",
+    "intTest": "mocha ./IntegrationTest/test.js"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +24,9 @@
     "@angular/router": "^17.3.0",
     "@angular/ssr": "^17.3.8",
     "bootstrap": "^5.3.3",
+    "chai": "^5.1.1",
     "express": "^4.21.0",
+    "express-fileupload": "^1.5.1",
     "peerjs": "^1.5.4",
     "rxjs": "~7.8.0",
     "socket.io": "^4.7.5",
@@ -43,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "mocha": "^10.7.3",
     "typescript": "~5.4.2"
   },
   "optionalDependencies": {

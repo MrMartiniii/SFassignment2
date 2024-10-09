@@ -42,4 +42,16 @@ export class UserService {
     userLogin(user: {username: string, password: string}) :Observable<any> {
         return this.http.post(`${this.url}/login`, user)
     }
+
+    uploadProfilePicture(username: string, file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+        formData.append('username', username); // Send the username along with the file
+    
+        return this.http.post(`${this.url}/uploadProfilePicture`, formData);
+    }
+
+    getProfilePicture(username: string): Observable<any> {
+        return this.http.get(`${this.url}/getProfilePicture?username=${username}`);
+    }
 }
