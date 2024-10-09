@@ -48,6 +48,11 @@ app.get('/groupFind', (req, res) => (groups.find(req, res, client)));
 app.post('/groupUpdate', (req, res) => (groups.update(req, res, client)));
 app.post('/groupDelete', (req, res) => (groups.delete(req, res, client)));
 
+const fileOps = require('./dbOperations/fileOps.js');
+app.post('/uploadChatImage', (req, res) => {
+    fileOps.uploadChatImage(req, res); // Use the dedicated file upload function
+  });
+
 // Start the server
 server.listen(PORT, () => {
     console.log('Server listening on port:', PORT);

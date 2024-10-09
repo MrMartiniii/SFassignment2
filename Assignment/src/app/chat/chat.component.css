@@ -37,13 +37,38 @@ body {
 
 .messages {
     flex: 3; /* Flex-grow for messages section */
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Stack messages vertically */
     background-color: white; /* White background for messages */
     border-radius: 8px; /* Rounded corners */
     padding: 15px; /* Padding for messages */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
     max-height: 500px; /* Max height for scrollable area */
+    height: 500px; /* Start with a fixed height */
     overflow-y: auto; /* Enable vertical scrolling */
 }
+
+.message-item {
+    display: flex; /* Flexbox for message layout */
+    align-items: center; /* Align items vertically */
+    margin: 10px 0; /* Space between messages */
+}
+
+.message-avatar {
+    width: 40px; /* Width of the avatar */
+    height: 40px; /* Height of the avatar */
+    border-radius: 50%; /* Circular avatar */
+    margin-right: 10px; /* Space between avatar and message content */
+}
+
+.message-content {
+    background-color: #F0F0F0; /* Background for the message content */
+    border-radius: 15px; /* Rounded corners for the message box */
+    padding: 10px; /* Padding for the message box */
+    max-width: 70%; /* Limit the width of the message box */
+}
+
+
 
 .posts {
     margin-bottom: 10px; /* Space between messages */
@@ -115,26 +140,38 @@ body {
     object-fit: cover; /* Ensure the video covers the box */
 }
 
-.typeBox {
-    margin-top: 20px; /* Space above type box */
+typeBox {
+    margin-top: 10px; /* Space above the type box */
+    display: flex; /* Use flexbox to keep the alignment */
+    justify-content: center; /* Center the input box under the messages */
+}
+
+.input-form {
+    width: 100%; /* Full width for the form to match the messages width */
+    max-width: 80%; /* Optional: Limit max width to align with the messages box */
 }
 
 .textInput {
-    display: flex; /* Flexbox for input and button */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    background-color: #f7f9fc; /* Light background color for the input area */
+    border-radius: 8px; /* Rounded corners for the input area */
+    padding: 5px; /* Padding inside the input area */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .textInput input[type="text"] {
     flex: 1; /* Take available space */
-    padding: 10px; /* Padding for input */
-    border: 1px solid #C4C4C4; /* Border for input */
-    border-radius: 4px; /* Rounded corners */
-    margin-right: 10px; /* Space between input and button */
-    background-color: white; /* White background for input */
-    color: #333333; /* Dark gray text color for input */
-    font-size: 1em; /* Font size for input */
+    padding: 10px; /* Padding for the text input */
+    border: 1px solid #C4C4C4; /* Border for the text input */
+    border-radius: 4px; /* Rounded corners for the text input */
+    margin-right: 10px; /* Space between input and submit button */
+    background-color: white; /* White background for the text input */
+    color: #333333; /* Dark gray text color for the text input */
+    font-size: 1em; /* Font size for the text input */
 }
 
-.submit-button {
+.textInput button {
     padding: 10px 15px; /* Padding for submit button */
     background-color: #4A90E2; /* Primary color for submit button */
     color: white; /* White text */
@@ -142,8 +179,62 @@ body {
     border-radius: 4px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor */
     transition: background-color 0.3s ease; /* Smooth transition */
+    margin-right: 10px; /* Space between submit button and image input */
 }
 
-.submit-button:hover {
+.textInput button:hover {
     background-color: #50E3C2; /* Teal on hover */
 }
+
+.upload-button {
+    cursor: pointer; /* Pointer cursor for image input */
+    background-color: #4A90E2; /* Primary color for image button */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for image button */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+
+.message-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.message-content {
+    background-color: #f1f1f1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 70%;
+}
+
+.chat-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+
+  .disconnect-button {
+    padding: 10px 15px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.disconnect-button:hover {
+    background-color: darkred;
+}
+

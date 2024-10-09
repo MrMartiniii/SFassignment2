@@ -5,18 +5,22 @@
     </div>
     <div class="container">
         <div class="messages">
-            <ul>
-                <li class="posts" *ngFor="let m of messages">
-                    <span class="username">{{m.split(':')[0]}}:</span> <span class="user-message">{{m.split(':')[1]}}</span>
-                </li>
-            </ul>
+            <div *ngFor="let message of messages" class="message-item">
+                <img [src]="message.profilePicture" alt="User Avatar" class="message-avatar" />
+                <div class="message-content">
+                    <strong>{{ message.username }}:</strong>
+                    <span *ngIf="message.message">{{ message.message }}</span>
+                    <img *ngIf="message.imageUrl" [src]="message.imageUrl" alt="Chat Image" class="chat-image" />
+                </div>
+            </div>
         </div>
+        
         <div class="peer-list">
             <h3>Available Users:</h3>
             <ul>
                 <li *ngFor="let peer of peerIds">
                     <button (click)="makeCall(peer.peerId)">Call: {{peer.username}}</button>
-                  </li>
+                </li>
             </ul>
         </div>
         <div class="video-container">
@@ -24,13 +28,17 @@
                 <video #remoteVideo class="remote-video" autoplay></video>
                 <video #myVideo class="local-video" muted autoplay></video>
             </div>
+            <div class="call-controls" *ngIf="isInCall"> 
+                <button (click)="endCall()" class="disconnect-button">Disconnect Call</button>
+            </div>
         </div>
     </div>
     <div class="typeBox">
-        <form>
+        <form (ngSubmit)="chat()" class="input-form">
             <div class="textInput">
-                <input type="text" [(ngModel)]="messagecontent" name="messagecontent" placeholder="Type your message..." required>
-                <button class="submit-button" (click)="chat()">Submit</button>
+                <input type="text" [(ngModel)]="messagecontent" name="messagecontent" (keydown.enter)="chat()" placeholder="Type a message..." />
+                <button type="submit">Submit</button>
+                <input type="file" accept="image/*" (change)="onImageSelected($event)" class="upload-button" />
             </div>
         </form>
     </div>

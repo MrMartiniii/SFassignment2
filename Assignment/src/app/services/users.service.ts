@@ -54,4 +54,11 @@ export class UserService {
     getProfilePicture(username: string): Observable<any> {
         return this.http.get(`${this.url}/getProfilePicture?username=${username}`);
     }
+
+    uploadChatImage(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('image', file); // 'image' is the key expected by the server
+    
+        return this.http.post(`${this.url}/uploadChatImage`, formData);
+    }    
 }

@@ -39,6 +39,7 @@ export class LoginComponent {
         sessionStorage.setItem('email', response.user.email);
         sessionStorage.setItem('roles', JSON.stringify(response.user.roles));
         sessionStorage.setItem('groups', JSON.stringify(response.user.groups));
+        sessionStorage.setItem('profilePic', response.user.profilePicture)
         this.router.navigate(['groups'])
       },
       (error) => {
