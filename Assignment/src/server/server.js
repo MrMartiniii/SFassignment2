@@ -47,6 +47,8 @@ app.post('/groupInsert', (req, res) => (groups.insert(req, res, client)));
 app.get('/groupFind', (req, res) => (groups.find(req, res, client)));
 app.post('/groupUpdate', (req, res) => (groups.update(req, res, client)));
 app.post('/groupDelete', (req, res) => (groups.delete(req, res, client)));
+app.post('/addChannel', (req, res) => (groups.addChannel(req, res, client)));
+app.post('/deleteChannel', (req, res) => (groups.deleteChannel(req, res, client)));
 
 const fileOps = require('./dbOperations/fileOps.js');
 app.post('/uploadChatImage', (req, res) => {

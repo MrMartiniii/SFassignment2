@@ -1,6 +1,6 @@
 <body>
     <div class="title">
-        <h1>RoomName</h1>
+        <h1>{{currentroom}}</h1>
         <button class="leave-room" (click)="end()">Leave Room</button>
     </div>
     <div class="container">
@@ -36,9 +36,11 @@
     <div class="typeBox">
         <form (ngSubmit)="chat()" class="input-form">
             <div class="textInput">
-                <input type="text" [(ngModel)]="messagecontent" name="messagecontent" (keydown.enter)="chat()" placeholder="Type a message..." />
+                <input type="text" [(ngModel)]="messagecontent" name="messagecontent" (keydown.enter)="chat()" placeholder="Type a message..." autocomplete="off" />
                 <button type="submit">Submit</button>
-                <input type="file" accept="image/*" (change)="onImageSelected($event)" class="upload-button" />
+                
+                <input type="file" accept="image/*" (change)="onImageSelected($event)" class="upload-button" id="fileInput" style="display: none;" />
+                <label for="fileInput" class="upload-label">📎 Attach File</label>
             </div>
         </form>
     </div>

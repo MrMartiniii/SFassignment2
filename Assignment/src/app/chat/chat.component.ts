@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import Peer from 'peerjs';
 import { UserService } from '../services/users.service';
 
@@ -20,7 +20,7 @@ export class ChatComponent implements OnInit {
 messagecontent:string='';
 messages: any[] = [];
 roomsnotice:string='';
-currentroom:string='';
+currentroom: string = '';
 isinRoom=false;
 newroom:string='';
 nousers:number= 0;
@@ -34,28 +34,46 @@ isInCall: boolean = false;
 peer: any;
 peerId: string = '';
 connectedPeer: any;
+remotePeerName: string = '';
 peerIds: { username: string, peerId: string }[] = []; // Array to store both username and Peer ID
 @ViewChild('myVideo') myVideo!: ElementRef<HTMLVideoElement>;
 @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
 
-constructor(private socketService:SocketService, private commonModule:CommonModule, private router:Router, private userService: UserService ) {}
+constructor(private socketService:SocketService, private commonModule:CommonModule, private router:Router, private userService: UserService, private route: ActivatedRoute, ) {}
 
 ngOnInit() {
-  this.initIoConnection();
-  this.initPeer();
-  this.getUsernameAndProfilePic();
+  // Get the group and channel from query parameters when the component initializes
+  this.route.queryParams.subscribe(params => {
+    const group = params['group'];
+    const channel = params['channel'];
+    if (group && channel) {
+      this.currentroom = `${group}-${channel}`; // Create a unique room identifier based on group and channel
+      console.log(`Joining room: ${this.currentroom}`);
 
-  // Emit the peer ID and username to the server when they are available
-  this.peer.on('open', (id: string) => {
-    console.log('My peer ID is:', id);
-    this.peerId = id; // Store the peer ID
+      this.getUsernameAndProfilePic(); // Load the user's profile picture first
+      this.initPeer(); // Initialize the peer connection first
 
-    const username = sessionStorage.getItem('username');
-    if (username) {
-      this.socketService.emit('join', { username: username, peerId: id }); // Send both username and Peer ID
-      console.log(`Join event emitted with username: ${username} and Peer ID: ${id}`); // Debug log
+      // Only initialize the socket connection once after peer connection is ready
+      this.peer.on('open', (id: string) => {
+        console.log('My peer ID is:', id);
+        this.peerId = id; // Store the peer ID
+        this.initIoConnection(); // Initialize the socket connection and join the room after peer ID is set
+      });
     }
   });
+}
+
+private initIoConnection() {
+  // Reinitialize the socket connection to ensure only one instance
+  this.socketService.initSocket();
+
+  // Emit the join event with the room and username when a new user connects
+  const username = sessionStorage.getItem('username');
+  if (username && this.currentroom) {
+    // Emit the join event to the server
+    this.socketService.emit('join', { room: this.currentroom, username: username, peerId: this.peerId });
+    console.log(`Join event emitted with username: ${username}, Peer ID: ${this.peerId}, and Room: ${this.currentroom}`);
+  }
 
   // Listen for the message history from the server
   this.socketService.onEvent('message-history').subscribe((history: any[]) => {
@@ -65,7 +83,6 @@ ngOnInit() {
 
   // Listen for peer list updates from the server
   this.socketService.onEvent('peer-list').subscribe((peerList: { username: string, peerId: string }[]) => {
-    // Filter out the current user's own peer ID from the peer list
     this.peerIds = peerList.filter(peer => peer.peerId !== this.peerId);
     console.log('Updated peer list:', this.peerIds); // Debug log to ensure the list is received
   });
@@ -79,7 +96,12 @@ ngOnInit() {
     }
   });
 
-
+  // Listen for new incoming messages
+  this.socketService.getMessage().subscribe((messageData: any) => {
+    console.log('Received message:', messageData); // Debug log
+    this.messages.push(messageData);
+    this.scrollToBottom();
+  });
 }
 
 private initPeer(): void {
@@ -99,34 +121,43 @@ private initPeer(): void {
 
   // Handle incoming calls from other peers
   this.peer.on('call', (call: any) => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        call.answer(stream); // Answer the call with your video stream
-        this.myVideo.nativeElement.srcObject = stream;
-        this.myVideo.nativeElement.play();
-
-        // Store the incoming call object in connectedPeer
-        this.connectedPeer = call;
-
-        call.on('stream', (remoteStream: MediaStream) => {
-          this.remoteVideo.nativeElement.srcObject = remoteStream;
-          this.remoteVideo.nativeElement.play();
-        });
-
-        call.on('close', () => {
-          console.log('The call has ended.');
-          this.cleanupVideoStreams();
-        });
-
-        call.on('error', (error: Error) => {
-          console.error('Call error:', error);
-        });
-      })
-      .catch((err) => {
-        console.error('Failed to get local stream', err);
-      });
+    console.log('Incoming call from:', call.peer);
+    this.handleIncomingCall(call);
   });
 }
+
+private handleIncomingCall(call: any): void {
+  navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then((stream) => {
+      call.answer(stream); // Answer the call with your video stream
+      this.myVideo.nativeElement.srcObject = stream;
+      this.myVideo.nativeElement.play();
+
+      // Store the incoming call object in connectedPeer
+      this.connectedPeer = call;
+
+      call.on('stream', (remoteStream: MediaStream) => {
+        console.log('Received remote stream');
+        this.remoteVideo.nativeElement.srcObject = remoteStream;
+        this.remoteVideo.nativeElement.play();
+      });
+
+      call.on('close', () => {
+        console.log('The call has ended.');
+        this.cleanupVideoStreams();
+        this.isInCall = false;
+      });
+
+      call.on('error', (error: Error) => {
+        console.error('Call error:', error);
+        this.isInCall = false;
+      });
+    })
+    .catch((err) => {
+      console.error('Failed to get local stream', err);
+    });
+}
+
 
 connectToPeer(remotePeerId: string): void {
   const conn = this.peer.connect(remotePeerId);
@@ -162,6 +193,7 @@ sendMessageToPeer(message: string): void {
 makeCall(remotePeerId: string): void {
   navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then((stream) => {
+      console.log('Calling peer:', remotePeerId);
       const call = this.peer.call(remotePeerId, stream);
       this.myVideo.nativeElement.srcObject = stream;
       this.myVideo.nativeElement.play();
@@ -171,6 +203,7 @@ makeCall(remotePeerId: string): void {
       this.isInCall = true;
 
       call.on('stream', (remoteStream: MediaStream) => {
+        console.log('Received remote stream on my side');
         this.remoteVideo.nativeElement.srcObject = remoteStream;
         this.remoteVideo.nativeElement.play();
       });
@@ -242,35 +275,32 @@ getProfilePicture(): void {
   }
 }
 
-private initIoConnection() {
-  this.socketService.initSocket(); // Reinitialize the socket connection
-
-  // Emit the join event with the username when a new user connects
-  const username = sessionStorage.getItem('username');
-  if (username) {
-    this.socketService.emit('join', { username: username, peerId: this.peerId }); // Send both username and Peer ID
-  }
-
-  this.socketService.getMessage().subscribe((messageData: any) => {
-    this.messages.push(messageData);
-    this.scrollToBottom(); 
-  });
-}
-
-
 chat() {
   if (this.messagecontent && this.username && this.isProfilePictureLoaded) {
-    const messageData = {
+    const messageData: {
+      room: string;
+      username: string;
+      message: string;
+      profilePicture?: string; // Marked as optional to align with the expected parameter type
+    } = {
+      room: this.currentroom,
       username: this.username,
       message: this.messagecontent,
-      profilePicture: this.profileImageUrl
     };
+
+    // Conditionally add the profilePicture property if it is available
+    if (this.profileImageUrl) {
+      messageData.profilePicture = this.profileImageUrl;
+    }
+
     this.socketService.send(messageData);
     this.messagecontent = '';
   } else {
     console.log("No message content, username missing, or profile picture not loaded");
   }
 }
+
+
 
 private scrollToBottom(): void {
   const messagesContainer = document.querySelector('.messages');
@@ -285,12 +315,26 @@ onImageSelected(event: any): void {
     this.userService.uploadChatImage(file).subscribe(
       (response: any) => {
         const imageUrl = `http://localhost:8888/${response.filePath}`;
-        const imageMessage = {
+        const imageMessage: {
+          room: string;
+          username: string;
+          message: string;
+          profilePicture?: string; // Marked as optional
+          imageUrl?: string; // Marked as optional
+        } = {
+          room: this.currentroom,
           username: this.username,
-          message: '', // Optional: you could include a message or leave it empty
-          profilePicture: this.profileImageUrl,
-          imageUrl: imageUrl // Include the image URL in the message data
+          message: '' // Optional: you could include a message or leave it empty
         };
+
+        // Conditionally add the profilePicture and imageUrl properties if they are available
+        if (this.profileImageUrl) {
+          imageMessage.profilePicture = this.profileImageUrl;
+        }
+        if (imageUrl) {
+          imageMessage.imageUrl = imageUrl;
+        }
+
         this.socketService.send(imageMessage);
       },
       (error) => {
@@ -301,6 +345,11 @@ onImageSelected(event: any): void {
 }
 
 end(){
+  if (this.connectedPeer) {
+    this.connectedPeer.close(); // Close the data connection
+    console.log('Peer connection closed.');
+    this.cleanupVideoStreams();
+  }
   this.socketService.leaveRoom();
   this.router.navigateByUrl('/groups')
 }

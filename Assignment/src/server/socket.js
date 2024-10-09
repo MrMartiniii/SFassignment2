@@ -1,69 +1,101 @@
 module.exports = {
     connect: function(io, PORT) {
         const chat = io.of('/chat'); // Create a namespace called /chat
-        const connectedUsers = {}; // Object to store connected users { socketId: { username, peerId } }
-        const messageHistory = []; // Array to store the chat message history
+        const rooms = {}; // Object to store room-specific details, including users and message history
 
         chat.on('connection', (socket) => {
             console.log('User connected to /chat namespace with socket ID:', socket.id);
 
-            // Send the last 5 messages to the newly connected user
-            socket.emit('message-history', messageHistory.slice(-5));
+            // Listen for the join event with room, username, and peerId from the client
+            socket.on('join', ({ room, username, peerId }) => {
+                if (room && username && peerId) {
+                    // Ensure the room exists in the rooms object
+                    if (!rooms[room]) {
+                        rooms[room] = { users: {}, messageHistory: [] };
+                    }
 
-            // Listen for the join event with both the username and peerId from the client
-            socket.on('join', ({ username, peerId }) => {
-                if (username && peerId) {
-                    connectedUsers[socket.id] = { username, peerId }; // Store the username and peerId by socket ID
-                    console.log(`${username} has joined the chat with Peer ID: ${peerId}`);
+                    // Check if the user is not already in the room to prevent multiple join messages
+                    if (!rooms[room].users[socket.id]) {
+                        socket.join(room); // Join the specified room
+                        console.log(`${username} has joined room: ${room} with Peer ID: ${peerId}`);
 
-                    // Create the join message
-                    const joinMessage = { 
-                        username: username, 
-                        message: ` has joined the chat`, 
-                        profilePicture: 'assets/default-avatar.png' 
-                    };
+                        // Add the user to the room's user list
+                        rooms[room].users[socket.id] = { username, peerId };
 
-                    // Add the join message to the message history
-                    messageHistory.push(joinMessage);
+                        // Create a join message for the room
+                        const joinMessage = {
+                            username: username,
+                            message: `${username} has joined the chat`,
+                            profilePicture: 'assets/default-avatar.png',
+                        };
 
-                    // Broadcast the join message to all clients in the chat
-                    chat.emit('message', joinMessage);
+                        // Add the join message to the message history
+                        rooms[room].messageHistory.push(joinMessage);
 
-                    // Broadcast the updated user list to all clients
-                    updatePeerList(chat, connectedUsers); // Call the function to update the peer list
+                        // Emit the message history to the newly joined user
+                        socket.emit('message-history', rooms[room].messageHistory.slice(-5));
+
+                        // Broadcast the join message to all clients in the room, excluding the one who just joined
+                        socket.to(room).emit('message', joinMessage);
+
+                        // Broadcast the updated user list to all clients in the room
+                        chat.to(room).emit('peer-list', Object.values(rooms[room].users));
+                    } else {
+                        console.log(`User ${username} is already in room: ${room}`);
+                    }
                 }
             });
 
             // Listen for incoming messages from the client
             socket.on('message', (data) => {
-                console.log(`Message received from ${data.username}: ${data.message}`);
-                messageHistory.push(data); // Add the incoming message to the message history
-                chat.emit('message', data); // Emit the message data with profile picture to all clients
+                const userRoom = getUserRoom(socket.id);
+                if (userRoom) {
+                    rooms[userRoom].messageHistory.push(data); // Add the incoming message to the message history
+                    chat.to(userRoom).emit('message', data); // Emit the message data with profile picture to all clients in the room
+                    console.log(`Message received from ${data.username} in room ${userRoom}: ${data.message}`);
+                }
             });
 
             // Handle user disconnect event
             socket.on('disconnect', () => {
-                const disconnectedUser = connectedUsers[socket.id]?.username || 'A user';
-                console.log('User disconnected from /chat namespace:', disconnectedUser);
-                const disconnectMessage = { 
-                    message: ` has left the chat`, 
-                    username: disconnectedUser, 
-                    profilePicture: 'assets/default-avatar.png' 
-                };
-                messageHistory.push(disconnectMessage); // Add the disconnect message to the history
-                chat.emit('message', disconnectMessage); // Broadcast to all clients
-                delete connectedUsers[socket.id]; // Remove the user from the list
+                const userRoom = getUserRoom(socket.id);
+                if (userRoom) {
+                    const disconnectedUser = rooms[userRoom].users[socket.id]?.username || 'A user';
+                    console.log('User disconnected from room:', disconnectedUser);
 
-                // Broadcast the updated user list to all clients
-                updatePeerList(chat, connectedUsers); // Call the function to update the peer list
+                    // Create a disconnect message
+                    const disconnectMessage = {
+                        message: `${disconnectedUser} has left the chat`,
+                        username: disconnectedUser,
+                        profilePicture: 'assets/default-avatar.png'
+                    };
+
+                    // Add the disconnect message to the message history
+                    rooms[userRoom].messageHistory.push(disconnectMessage);
+                    chat.to(userRoom).emit('message', disconnectMessage); // Broadcast to all clients in the room
+
+                    // Remove the user from the room's user list
+                    delete rooms[userRoom].users[socket.id];
+
+                    // Broadcast the updated user list to all clients in the room
+                    chat.to(userRoom).emit('peer-list', Object.values(rooms[userRoom].users));
+
+                    // If the room is empty, you can optionally clean up the room
+                    if (Object.keys(rooms[userRoom].users).length === 0) {
+                        delete rooms[userRoom];
+                    }
+                }
             });
-        });
 
-        // Function to update and emit the peer list to all connected clients
-        function updatePeerList(chatNamespace, users) {
-            const peerList = Object.values(users); // Extract the list of peers
-            chatNamespace.emit('peer-list', peerList); // Send the updated peer list to all clients
-            console.log('Updated peer list sent to all clients:', peerList); // Debug log
-        }
+            // Utility function to get the user's room based on their socket ID
+            function getUserRoom(socketId) {
+                for (const room in rooms) {
+                    if (rooms[room].users[socketId]) {
+                        return room;
+                    }
+                }
+                return null;
+            }
+        });
     }
-}
+};

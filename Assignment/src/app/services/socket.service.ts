@@ -32,10 +32,12 @@ export class SocketService {
             });
         });
     }
-
-    send(messageData: {username: string; message: string}): void {
-        this.socket.emit('message', messageData);
+    
+    send(messageData: { room: string; username: string; message: string; profilePicture?: string; imageUrl?: string }): void {
+      this.socket.emit('message', messageData);
     }
+    
+    
 
     leaveRoom(): void {
         if (this.socket) {

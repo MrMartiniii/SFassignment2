@@ -15,11 +15,9 @@ export class GroupService {
 
     constructor(private http: HttpClient) { }
 
-    groupInsert(group:any) {
-        console.log(group);
-        this.http.post(this.url + "/groupInsert", group, httpOptions)
-            .subscribe(res => console.log("done"));
-    }
+    groupInsert(newGroup: any) {
+        return this.http.post<any>(`${this.url}/groupInsert`, newGroup, httpOptions);
+      }
 
     groupFind(){
         return this.http.get<GroupModel[]>(this.url + "/groupFind", httpOptions);
@@ -36,4 +34,12 @@ export class GroupService {
         this.http.post(this.url + "/groupDelete", group)
             .subscribe(res => console.log("done"))
     }
+
+    addChannel(groupName: string, newChannel: string) {
+        return this.http.post<any>(`${this.url}/addChannel`, { groupName, newChannel }, httpOptions);
+      }
+      
+      deleteChannel(groupName: string, channelToDelete: string) {
+        return this.http.post<any>(`${this.url}/deleteChannel`, { groupName, channelToDelete }, httpOptions);
+      }
 }

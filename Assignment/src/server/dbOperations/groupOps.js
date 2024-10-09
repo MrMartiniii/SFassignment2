@@ -59,3 +59,45 @@ exports.delete = async function (req, res, client) {
     res.send(queryJSON);
     client.close(0);
 }
+
+exports.addChannel = async function (req, res, client) {
+    await client.connect();
+    let db = client.db("userDb");
+    let myCol = db.collection("groups");
+
+    const { groupName, newChannel } = req.body;
+
+    try {
+        const result = await myCol.updateOne(
+            { groupName: groupName },
+            { $addToSet: { channels: newChannel } } // Ensures no duplicates are added
+        );
+        res.json({ message: 'Channel added successfully', result });
+    } catch (error) {
+        console.error('Error adding channel:', error);
+        res.status(500).json({ message: 'Error adding channel', error });
+    } finally {
+        client.close();
+    }
+};
+
+exports.deleteChannel = async function (req, res, client) {
+    await client.connect();
+    let db = client.db("userDb");
+    let myCol = db.collection("groups");
+
+    const { groupName, channelToDelete } = req.body;
+
+    try {
+        const result = await myCol.updateOne(
+            { groupName: groupName },
+            { $pull: { channels: channelToDelete } } // Removes the specified channel
+        );
+        res.json({ message: 'Channel deleted successfully', result });
+    } catch (error) {
+        console.error('Error deleting channel:', error);
+        res.status(500).json({ message: 'Error deleting channel', error });
+    } finally {
+        client.close();
+    }
+};

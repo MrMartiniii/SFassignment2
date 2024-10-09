@@ -16,4 +16,5 @@ export interface GroupModel{
     groupName: string;
     admins: string[];
     users: string[];
+    channels: string[];
 }

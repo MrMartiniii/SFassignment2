@@ -21,41 +21,33 @@
 
     <div class="groups">
         <ul>
-            <li *ngFor="let group of groups; let i = index">
-                <details>
-                    <summary>
-                        {{group.groupName}}
-                    </summary>
-                    <div class="detailsbox">
-                        <select name="channels" id="Channel">
-                            <option value="">channel1</option>
-                        </select>
-                        <button *ngIf="(userGroups.includes(group.groupName)) || (isAdmin)" (click)="join()">Join Channel</button>
-                        <button *ngIf="(isAdmin)" (click)="showUsers()">{{ userState ? "Hide Users" : "Edit Users" }}</button>
-                        <button *ngIf="(isAdmin)">Delete Channel</button>
-                        <button *ngIf="(isAdmin)" (click)="delGroup(group)">Delete Group</button>
-                    </div>
-                    <div *ngIf="userState">
-                        <p>In {{group.groupName}}</p>
-                    </div>
-                    <div *ngIf="userState" class="userlistDiv">
-                        <div *ngFor="let u of users">
-                            <li class="userlist">
-                                <p>{{u.username}}</p>
-                                <button>Add to Group</button>
-                                <button (click)="makeAdmin()">Make Admin</button>
-                            </li>
-                        </div>
-                    </div>
-                </details>
-            </li> 
-            <li *ngIf="isAdmin" class="addGroup">
-                <details class="create-group-details">
-                    <summary>Create Group</summary>
-                    <input type="text" [(ngModel)]="newGroup.groupName" placeholder="Group Name">
-                    <input type="submit" (click)="addGroup()" value="Add Group">
-                </details>
-            </li>
+          <li *ngFor="let group of groups; let i = index">
+            <details>
+              <summary>{{group.groupName}}</summary>
+              <div class="detailsbox">
+                <select name="channels" id="Channel" [(ngModel)]="selectedChannels[i]">
+                  <option *ngFor="let channel of group.channels" [value]="channel">{{channel}}</option>
+                </select>
+            
+                <button *ngIf="(userGroups.includes(group.groupName)) || (isAdmin)" (click)="join(i)">Join Channel</button>
+                
+                <button *ngIf="isAdmin" (click)="deleteChannel(group.groupName, selectedChannels[i])">Delete Channel</button>
+            
+                <input *ngIf="isAdmin" type="text" [(ngModel)]="newChannelNames[i]" placeholder="New Channel Name" />
+                <button *ngIf="isAdmin" (click)="addChannel(group.groupName, i)">Add Channel</button>
+            
+                <button *ngIf="isAdmin" (click)="delGroup(group)">Delete Group</button>
+              </div>
+            </details>
+          </li>
+          <li *ngIf="isAdmin" class="addGroup">
+            <details class="create-group-details">
+              <summary>Create Group</summary>
+              <input type="text" [(ngModel)]="newGroup.groupName" placeholder="Group Name">
+              <input type="submit" (click)="addGroup()" value="Add Group">
+            </details>
+          </li>
         </ul>
-    </div>
+      </div>
+      
 </div>
